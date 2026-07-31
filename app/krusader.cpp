@@ -98,6 +98,7 @@ Krusader::Krusader(const QCommandLineParser &parser)
     plzWait = new KrPleaseWaitHandler(this);
 
     const bool runKonfig = versionControl();
+    const KConfigGroup advancedGroup(krConfig, "Advanced");
 
     QString message;
     switch (krConfig->accessMode()) {
@@ -105,7 +106,9 @@ Krusader::Krusader(const QCommandLineParser &parser)
         message = "Krusader's configuration file can't be found. Default values will be used.";
         break;
     case KConfigBase::ReadOnly:
-        message = "Krusader's configuration file is in READ ONLY mode (why is that!?) Changed values will not be saved";
+        if (advancedGroup.readEntry("Read Only Config Is OK", false))
+            message = "Krusader's configuration file is in READ ONLY mode (why is that!?) Changed values will not be saved";
+        
         break;
     case KConfigBase::ReadWrite:
         message = "";

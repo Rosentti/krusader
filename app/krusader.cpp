@@ -106,7 +106,7 @@ Krusader::Krusader(const QCommandLineParser &parser)
         message = "Krusader's configuration file can't be found. Default values will be used.";
         break;
     case KConfigBase::ReadOnly:
-        if (advancedGroup.readEntry("Read Only Config Is OK", false))
+        if (!advancedGroup.readEntry("Read Only Config Is OK", false))
             message = "Krusader's configuration file is in READ ONLY mode (why is that!?) Changed values will not be saved";
         
         break;
